@@ -103,7 +103,13 @@ function admLogin() {
     })
     .catch((error) => {
       if (error.code === "auth/popup-closed-by-user") return;
-      err.textContent = "Sign-in failed. Please try again.";
+      console.error("Google sign-in error:", error.code, error.message);
+      const msg = error.code === "auth/operation-not-allowed"
+        ? "Google sign-in is not enabled in Firebase Console."
+        : error.code === "auth/unauthorized-domain"
+        ? "This domain is not authorized in Firebase Console."
+        : `Sign-in failed (${error.code}).`;
+      err.textContent = msg;
       err.style.display = "block";
     });
 }
