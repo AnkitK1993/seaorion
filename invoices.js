@@ -6,11 +6,11 @@ const MASTER_KEY      = "soa_masters";     // {toName,toAddr,owner,charterers,ve
 const META_KEY        = "soa_inv_meta";    // {counters:{fy:lastSeq}}
 const INV_NUMBERS_KEY = "soa_inv_numbers"; // string[] of every invoice number ever used
 
-const INV_BANK = {
-  swift:    "REMOVED_SWIFT",
-  bank:     "REMOVED_BANK_NAME",
+let INV_BANK = {
+  swift:    "",
+  bank:     "",
   favoring: "SEAORION SHIPPING LLP",
-  account:  "REMOVED_ACCOUNT",
+  account:  "",
 };
 
 const _MONTHS = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE",
@@ -1155,7 +1155,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const trySync = (attempts) => {
     if (window._fbEnabled && window._db) {
       const keys = [INV_KEY, MASTER_KEY, META_KEY, INV_NUMBERS_KEY];
-      Promise.all(keys.map(k =>
+      const invoiceSync = Promise.all(keys.map(k =>
         window._db.collection("seaorion").doc(k).get()
           .then(doc => {
             if (!doc.exists) return;
@@ -1164,7 +1164,14 @@ document.addEventListener("DOMContentLoaded", () => {
             window._cache[k] = data;
             try { localStorage.setItem(k, JSON.stringify(data)); } catch {}
           }).catch(() => {})
-      )).then(() => {
+      ));
+      const bankSync = window._db.collection("config").doc("config").get()
+        .then(doc => {
+          if (doc.exists && doc.data().bank) {
+            INV_BANK = { ...INV_BANK, ...doc.data().bank };
+          }
+        }).catch(() => {});
+      Promise.all([invoiceSync, bankSync]).then(() => {
         if (sessionStorage.getItem("soa_adm") === "1") {
           invBootstrapCounter();
           invBootstrapNumbers();
