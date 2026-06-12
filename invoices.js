@@ -1160,14 +1160,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const loadBank = () => {
     if (!window._fbEnabled || !window._db) return;
-    window._db.collection("config").doc("config").get()
+    window._db.collection("seaorion").doc("config").get()
       .then(doc => {
         if (doc.exists && doc.data().bank) {
           INV_BANK = { ...INV_BANK, ...doc.data().bank };
           try { localStorage.setItem("soa_bank", JSON.stringify(doc.data().bank)); } catch {}
           invRender();
         } else {
-          console.warn("INV_BANK: config/config doc missing or has no bank field");
+          console.warn("INV_BANK: seaorion/config doc missing or has no bank field");
         }
       })
       .catch(err => console.error("INV_BANK load failed:", err.code, err.message));
