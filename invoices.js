@@ -448,18 +448,9 @@ function _invDoGenerate() {
   }
 
   const commAmt = (freight * commPct / 100).toFixed(2);
-  const invoice = { invoiceNo, date, toName, toAddr, owner, charterers, vessel, cpDate, commPct, freight, commAmt, createdAt: Date.now() };
+  _pendingInvoice = { invoiceNo, date, toName, toAddr, owner, charterers, vessel, cpDate, commPct, freight, commAmt, createdAt: Date.now() };
 
-  const invoices = invLoad();
-  invoices.unshift(invoice);
-  invSave(invoices);
-
-  masterUpsert({ toName, toAddr, owner, charterers, vessel });
-  invSaveUsedNumber(invoiceNo);
-  invNumAdd(invoiceNo);
-
-  invRender();
-  invShowPdfPreview(0);
+  invShowPdfPreview("pending");
 }
 
 // ── DELETE ────────────────────────────────────────────────────────────────
@@ -516,10 +507,11 @@ function invMultiDelete() {
 }
 
 // ── PDF PREVIEW ───────────────────────────────────────────────────────────
-let _pdfPrevIdx = null;
+let _pdfPrevIdx     = null; // index in saved invoices (for history re-preview)
+let _pendingInvoice = null; // invoice built from form, not yet saved to history
 
 async function invShowPdfPreview(i) {
-  const inv = invLoad()[i];
+  const inv = (i === "pending") ? _pendingInvoice : invLoad()[i];
   if (!inv) return;
   _pdfPrevIdx = i;
 
@@ -536,7 +528,8 @@ async function invShowPdfPreview(i) {
 
 function invClosePdfPreview() {
   document.getElementById("pdfPrevModal")?.classList.remove("pdf-prev-show");
-  _pdfPrevIdx = null;
+  _pdfPrevIdx     = null;
+  _pendingInvoice = null;
 }
 
 async function invPdfPreviewDownload() {
@@ -544,6 +537,19 @@ async function invPdfPreviewDownload() {
   const btn = document.getElementById("pdfPrevDownloadBtn");
   if (btn) { btn.disabled = true; btn.textContent = "Generating…"; }
   try {
+    // If this is a new invoice (pending), save to history now on download
+    if (_pdfPrevIdx === "pending" && _pendingInvoice) {
+      const inv = _pendingInvoice;
+      const invoices = invLoad();
+      invoices.unshift(inv);
+      invSave(invoices);
+      masterUpsert({ toName: inv.toName, toAddr: inv.toAddr, owner: inv.owner, charterers: inv.charterers, vessel: inv.vessel });
+      invSaveUsedNumber(inv.invoiceNo);
+      invNumAdd(inv.invoiceNo);
+      _pdfPrevIdx = 0; // now saved at index 0
+      _pendingInvoice = null;
+      invRender();
+    }
     await invDownloadPdf(_pdfPrevIdx);
     invClosePdfPreview();
   } finally {
@@ -895,7 +901,7 @@ function _imgToBase64(src) {
 
 // ── PDF GENERATION ────────────────────────────────────────────────────────
 async function invDownloadPdf(i) {
-  const inv = invLoad()[i];
+  const inv = (typeof i === "object") ? i : invLoad()[i];
   if (!inv) return;
 
   if (!window.html2canvas || !window.jspdf) {
