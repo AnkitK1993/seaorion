@@ -1,0 +1,1206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SEAORION — Global Freight & Shipbroking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="logo.png" type="image/png" />
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav>
+      <a href="#" class="logo">
+        <img src="logo.png" class="logo-img" alt="SEAORION" />
+      </a>
+      <ul class="nav-links">
+
+        <li class="nav-group">
+          <span class="nav-group-btn">Company <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <ul class="nav-dropdown">
+            <li><a href="#about">About SEAORION</a></li>
+            <li><a href="#services">Our Services</a></li>
+            <li><a href="#contact">Contact SEAORION</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-group">
+          <span class="nav-group-btn">Market <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <ul class="nav-dropdown">
+            <li><a href="#market">Freight Market Indices</a></li>
+            <li><a href="#freight">Freight Trends</a></li>
+            <li><a href="#bunkers">Bunker Trends</a></li>
+            <li><a href="#news">Market News</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-group">
+          <span class="nav-group-btn">Operations <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <ul class="nav-dropdown">
+            <li><a href="#routes">Live Freight Routes</a></li>
+            <li><a href="#fixtures">Fixtures Reported</a></li>
+            <li><a href="#vessels">Vessel Positions</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-group">
+          <span class="nav-group-btn">Ports &amp; Trade <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <ul class="nav-dropdown">
+            <li><a href="#ports">Port Status</a></li>
+            <li><a href="#portinfo">Port Information</a></li>
+            <li><a href="#currencies">Live Currency Rates</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-group">
+          <span class="nav-group-btn">Tools <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <ul class="nav-dropdown">
+            <li><a href="#calculator">Freight Calculator</a></li>
+            <li><a href="#documents">Documents</a></li>
+          </ul>
+        </li>
+
+      </ul>
+      <div class="nav-right">
+        <div class="nav-badge"><span class="nbdot"></span>24×7 Operations</div>
+
+        <!-- Login button (logged-out state) -->
+        <button class="nav-login-btn" id="navLoginBtn" onclick="admOpenModal()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Login
+        </button>
+
+        <!-- Logged-in: avatar toggles admin panel -->
+        <div class="nav-user-avatar" id="navUser" style="display:none" onclick="admTogglePanel()" title="Admin Panel">A</div>
+
+        <button
+          class="nav-cta"
+          onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })"
+        >
+          Enquire Now
+        </button>
+      </div>
+    </nav>
+
+    <!-- TICKER -->
+    <div class="ticker">
+      <div class="t-label">LIVE MARKET</div>
+      <div
+        style="overflow: hidden; flex: 1; display: flex; align-items: center"
+      >
+        <div class="t-scroll" id="tickScroll">
+          <span class="t-item"
+            ><span class="t-n">BDI</span
+            ><span class="t-v" id="tb-bdi">1,842</span
+            ><span class="t-up" id="tb-bdi-c">▲2.3%</span></span
+          >
+          <span class="t-item"
+            ><span class="t-n">USD/EUR</span
+            ><span class="t-v" id="tb-eur">0.9218</span
+            ><span class="t-dn" id="tb-eur-c">▼0.1%</span></span
+          >
+          <span class="t-item"
+            ><span class="t-n">USD/INR</span
+            ><span class="t-v" id="tb-inr">83.41</span
+            ><span class="t-up" id="tb-inr-c">▲0.05%</span></span
+          >
+          <span class="t-item"
+            ><span class="t-n">BRENT</span
+            ><span class="t-v" id="tb-oil">$84.20</span
+            ><span class="t-up" id="tb-oil-c">▲1.1%</span></span
+          >
+          <span class="t-item"
+            ><span class="t-n">VLSFO SIN</span><span class="t-v">$612/MT</span
+            ><span class="t-up">▲0.3%</span></span
+          >
+          <span class="t-item"
+            ><span class="t-n">CPP TCEI</span><span class="t-v">712</span
+            ><span class="t-dn">▼0.6%</span></span
+          >
+          <span class="t-item"
+            ><span class="t-n">SCFI</span><span class="t-v">1,106</span
+            ><span class="t-dn">▼0.8%</span></span
+          >
+          <span class="t-item"
+            ><span class="t-n">USD/CNY</span
+            ><span class="t-v" id="tb-cny">7.2341</span
+            ><span class="t-up" id="tb-cny-c">▲0.05%</span></span
+          >
+          <span class="t-item"
+            ><span class="t-n">IFO380</span><span class="t-v">$498/MT</span
+            ><span class="t-dn">▼0.4%</span></span
+          >
+          <!-- duplicate for loop -->
+          <span class="t-item"
+            ><span class="t-n">BDI</span><span class="t-v">1,842</span
+            ><span class="t-up">▲2.3%</span></span
+          >
+          <span class="t-item"
+            ><span class="t-n">USD/EUR</span><span class="t-v">0.9218</span
+            ><span class="t-dn">▼0.1%</span></span
+          >
+          <span class="t-item"
+            ><span class="t-n">USD/INR</span><span class="t-v">83.41</span
+            ><span class="t-up">▲0.05%</span></span
+          >
+          <span class="t-item"
+            ><span class="t-n">BRENT</span><span class="t-v">$84.20</span
+            ><span class="t-up">▲1.1%</span></span
+          >
+          <span class="t-item"
+            ><span class="t-n">VLSFO SIN</span><span class="t-v">$612/MT</span
+            ><span class="t-up">▲0.3%</span></span
+          >
+          <span class="t-item"
+            ><span class="t-n">CPP TCEI</span><span class="t-v">712</span
+            ><span class="t-dn">▼0.6%</span></span
+          >
+          <span class="t-item"
+            ><span class="t-n">SCFI</span><span class="t-v">1,106</span
+            ><span class="t-dn">▼0.8%</span></span
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-glow1"></div>
+      <div class="hero-glow2"></div>
+      <!-- Orion Constellation Decoration -->
+      <div class="orion-deco">
+        <svg
+          width="320"
+          height="420"
+          viewBox="0 0 320 420"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <!-- Stars of Orion (simplified) -->
+          <circle cx="160" cy="30" r="5" fill="#38bdf8" opacity=".9" />
+          <!-- Betelgeuse -->
+          <circle cx="240" cy="60" r="3.5" fill="#38bdf8" opacity=".7" />
+          <!-- Bellatrix -->
+          <circle cx="80" cy="50" r="3" fill="#eef2ff" opacity=".5" />
+          <!-- Belt stars -->
+          <circle cx="120" cy="180" r="4" fill="#38bdf8" opacity=".95" />
+          <circle cx="160" cy="192" r="4" fill="#38bdf8" opacity=".95" />
+          <circle cx="200" cy="178" r="4" fill="#38bdf8" opacity=".95" />
+          <!-- Belt line -->
+          <line
+            x1="124"
+            y1="180"
+            x2="156"
+            y2="191"
+            stroke="#38bdf8"
+            stroke-width=".8"
+            opacity=".4"
+          />
+          <line
+            x1="164"
+            y1="191"
+            x2="196"
+            y2="179"
+            stroke="#38bdf8"
+            stroke-width=".8"
+            opacity=".4"
+          />
+          <!-- Lower body -->
+          <circle cx="130" cy="290" r="3.5" fill="#22d3ee" opacity=".6" />
+          <!-- Rigel -->
+          <circle cx="210" cy="300" r="3" fill="#eef2ff" opacity=".5" />
+          <!-- Saiph -->
+          <!-- Connector lines -->
+          <line
+            x1="160"
+            y1="35"
+            x2="120"
+            y2="176"
+            stroke="#38bdf8"
+            stroke-width=".6"
+            opacity=".2"
+          />
+          <line
+            x1="240"
+            y1="64"
+            x2="200"
+            y2="175"
+            stroke="#38bdf8"
+            stroke-width=".6"
+            opacity=".2"
+          />
+          <line
+            x1="120"
+            y1="184"
+            x2="130"
+            y2="287"
+            stroke="#eef2ff"
+            stroke-width=".6"
+            opacity=".15"
+          />
+          <line
+            x1="200"
+            y1="182"
+            x2="210"
+            y2="297"
+            stroke="#eef2ff"
+            stroke-width=".6"
+            opacity=".15"
+          />
+          <!-- Nebula hint -->
+          <circle cx="158" cy="235" r="18" fill="#38bdf8" opacity=".07" />
+          <circle cx="158" cy="235" r="10" fill="#38bdf8" opacity=".05" />
+          <!-- Scattered small stars -->
+          <circle cx="40" cy="100" r="1.5" fill="#eef2ff" opacity=".4" />
+          <circle cx="290" cy="140" r="1.5" fill="#eef2ff" opacity=".4" />
+          <circle cx="60" cy="250" r="1.5" fill="#22d3ee" opacity=".4" />
+          <circle cx="280" cy="260" r="1" fill="#eef2ff" opacity=".3" />
+          <circle cx="20" cy="360" r="1.5" fill="#eef2ff" opacity=".3" />
+          <circle cx="300" cy="380" r="2" fill="#38bdf8" opacity=".35" />
+        </svg>
+      </div>
+
+      <div class="hero-inner">
+        <div class="hero-eyebrow">
+          <span class="nbdot"></span>
+          Independent Shipbroking · Mumbai, India
+        </div>
+        <h1>
+          Chartering &amp;<br />
+          Freight Broking<br />
+          <em>Guided by Stars.</em>
+        </h1>
+        <p class="hero-sub">
+          SEAORION is an independent shipbroking firm specialising in tanker
+          chartering and freight broking for bulk liquids — petrochemicals, CPP,
+          vegetable oils, and gas. We connect ship owners, manufacturers, and
+          traders worldwide with precision and integrity.
+        </p>
+        <div class="hero-btns">
+          <button
+            class="btn-gold"
+            onclick="
+              document
+                .getElementById('services')
+                .scrollIntoView({ behavior: 'smooth' })
+            "
+          >
+            Our Services
+          </button>
+          <button
+            class="btn-ghost"
+            onclick="
+              document
+                .getElementById('calculator')
+                .scrollIntoView({ behavior: 'smooth' })
+            "
+          >
+            Freight Calculator
+          </button>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="hstat-num"><span>24</span>×7</div>
+            <div class="hstat-lbl">Operations Desk</div>
+          </div>
+          <div>
+            <div class="hstat-num" id="hs-routes">180<span>+</span></div>
+            <div class="hstat-lbl">Active Fixtures</div>
+          </div>
+          <div>
+            <div class="hstat-num" id="hs-clients">60<span>+</span></div>
+            <div class="hstat-lbl">Global Clients</div>
+          </div>
+          <div>
+            <div class="hstat-num" id="hs-yrs">7<span>+</span></div>
+            <div class="hstat-lbl">Years Experience</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="div" />
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="sec-tag">Who We Are</div>
+      <h2 class="sec-title">About SEAORION</h2>
+      <div class="about-grid">
+        <div class="about-copy">
+          <p class="tagline">
+            "Just as Orion navigates the night sky, we navigate the complexities
+            of global freight — with precision, clarity, and resolve."
+          </p>
+          <p>
+            SEAORION is an
+            <strong
+              >independent shipbroking and freight forwarding company</strong
+            >
+            headquartered in Mumbai, India. We specialise in the chartering and
+            broking of tankers for bulk liquid cargoes — including
+            petrochemicals, clean petroleum products (CPP), vegetable oils, and
+            gas. Our customer base spans ship owners, commodity manufacturers,
+            and international traders across the Middle East, Indian
+            Subcontinent, Southeast Asia, Far East, and West.
+          </p>
+          <p>
+            Drawing inspiration from Orion — the hunter's constellation that has
+            guided seafarers for centuries — we operate with
+            <strong>proactive responsiveness, deep market knowledge</strong>,
+            and an unwavering commitment to delivering value to our clients. Our
+            24×7 operations desk means our clients are never without support,
+            regardless of time zones or trading windows.
+          </p>
+          <div class="about-pillars">
+            <div class="pillar">
+              <div class="pillar-ico">⚓</div>
+              <div class="pillar-name">Integrity</div>
+              <div class="pillar-desc">Transparent dealings, every fixture</div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-ico">🌐</div>
+              <div class="pillar-name">Global Reach</div>
+              <div class="pillar-desc">Active on all major tanker routes</div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-ico">⚡</div>
+              <div class="pillar-name">Responsiveness</div>
+              <div class="pillar-ico-sub"></div>
+              <div class="pillar-desc">24×7 desk, zero-delay communication</div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-ico">🔬</div>
+              <div class="pillar-name">Intelligence</div>
+              <div class="pillar-desc">
+                Data-driven research and market insights
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="about-visual">
+          <svg
+            width="280"
+            height="280"
+            viewBox="0 0 280 280"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <!-- Globe -->
+            <circle
+              cx="140"
+              cy="140"
+              r="110"
+              stroke="rgba(56,189,248,.15)"
+              stroke-width="1"
+            />
+            <circle
+              cx="140"
+              cy="140"
+              r="80"
+              stroke="rgba(56,189,248,.1)"
+              stroke-width="1"
+            />
+            <circle
+              cx="140"
+              cy="140"
+              r="50"
+              stroke="rgba(56,189,248,.08)"
+              stroke-width="1"
+            />
+            <!-- Meridians -->
+            <ellipse
+              cx="140"
+              cy="140"
+              rx="110"
+              ry="40"
+              stroke="rgba(56,189,248,.08)"
+              stroke-width=".8"
+            />
+            <ellipse
+              cx="140"
+              cy="140"
+              rx="110"
+              ry="75"
+              stroke="rgba(34,211,238,.06)"
+              stroke-width=".8"
+            />
+            <!-- Ship route arcs -->
+            <path
+              d="M50 140 Q90 80 140 90 Q190 100 230 140"
+              stroke="#38bdf8"
+              stroke-width="1.2"
+              opacity=".3"
+              fill="none"
+              stroke-dasharray="4 4"
+            />
+            <path
+              d="M60 160 Q100 200 140 195 Q180 190 220 155"
+              stroke="#4a9fe0"
+              stroke-width="1.2"
+              opacity=".25"
+              fill="none"
+              stroke-dasharray="4 4"
+            />
+            <!-- Origin dot Mumbai -->
+            <circle cx="185" cy="158" r="4" fill="#38bdf8" />
+            <circle cx="185" cy="158" r="12" fill="#38bdf8" opacity=".12" />
+            <circle cx="185" cy="158" r="8" fill="#38bdf8" opacity=".2" />
+            <text
+              x="192"
+              y="155"
+              fill="#38bdf8"
+              font-size="9"
+              font-family="IBM Plex Mono"
+              opacity=".9"
+            >
+              Mumbai
+            </text>
+            <!-- Port dots -->
+            <circle cx="75" cy="135" r="3" fill="#22d3ee" opacity=".7" />
+            <text
+              x="43"
+              y="130"
+              fill="#22d3ee"
+              font-size="8"
+              font-family="IBM Plex Mono"
+              opacity=".6"
+            >
+              Rotterdam
+            </text>
+            <circle cx="230" cy="100" r="3" fill="#22d3ee" opacity=".6" />
+            <text
+              x="217"
+              y="95"
+              fill="#22d3ee"
+              font-size="8"
+              font-family="IBM Plex Mono"
+              opacity=".6"
+            >
+              Shanghai
+            </text>
+            <circle cx="155" cy="122" r="2.5" fill="#eef2ff" opacity=".5" />
+            <text
+              x="160"
+              y="120"
+              fill="#eef2ff"
+              font-size="8"
+              font-family="IBM Plex Mono"
+              opacity=".45"
+            >
+              Dubai
+            </text>
+            <circle cx="110" cy="170" r="2.5" fill="#eef2ff" opacity=".4" />
+            <text
+              x="82"
+              y="183"
+              fill="#eef2ff"
+              font-size="8"
+              font-family="IBM Plex Mono"
+              opacity=".4"
+            >
+              Singapore
+            </text>
+            <!-- Centre label -->
+            <text
+              x="116"
+              y="144"
+              fill="#38bdf8"
+              font-size="11"
+              font-family="Syne"
+              font-weight="700"
+              opacity=".5"
+            >
+              SEAORION
+            </text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <hr class="div" />
+
+    <!-- SERVICES -->
+    <section id="services">
+      <div class="sec-tag">What We Do</div>
+      <h2 class="sec-title">Our Services</h2>
+      <p class="sec-lead">
+        Comprehensive shipbroking and freight management, modelled on the
+        world's best tanker broking practices.
+      </p>
+      <div class="services-grid">
+        <div class="svc-card">
+          <div class="svc-icon">🚢</div>
+          <div class="svc-title">Tanker Chartering & Ship Broking</div>
+          <div class="svc-desc">
+            Our core. We broker barges for STS transfer in Far East Asia, small
+            and handy tankers loading from the Middle East, and MR tankers for
+            West-loading cargoes. Trusted by owners, traders, and manufacturers
+            across the globe.
+          </div>
+          <div class="svc-tag">CORE SERVICE</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">📋</div>
+          <div class="svc-title">COA & Time Charter Management</div>
+          <div class="svc-desc">
+            Full management of Contracts of Affreightment and Time Charter
+            arrangements — from negotiation and fixture recap through to final
+            performance and renewal. We safeguard your contractual position at
+            every stage.
+          </div>
+          <div class="svc-tag">COA · TC</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">⚖️</div>
+          <div class="svc-title">Demurrage Claims & Collections</div>
+          <div class="svc-desc">
+            Precise laytime calculations, demurrage statement preparation, claim
+            filing, and recovery collections. We navigate charter party clauses,
+            vessel logs, and port records to protect your financial position
+            against unjust delays.
+          </div>
+          <div class="svc-tag">CLAIMS</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">🔧</div>
+          <div class="svc-title">Post-Fixture Operations</div>
+          <div class="svc-desc">
+            Once a fixture is confirmed, our qualified operations team takes
+            over — 24×7. Voyage instructions, charter party compliance, port
+            coordination, bunker supply, disbursement account review, freight
+            and hire collection. Always on desk.
+          </div>
+          <div class="svc-tag">24×7 DESK</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">📊</div>
+          <div class="svc-title">Market Research & Intelligence</div>
+          <div class="svc-desc">
+            Actionable freight market reports, rate trend analysis, cargo flow
+            intelligence, and vessel supply-demand studies. We provide our
+            clients with the intelligence edge to make better chartering
+            decisions — faster.
+          </div>
+          <div class="svc-tag">RESEARCH</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">🌊</div>
+          <div class="svc-title">Ocean Freight Forwarding</div>
+          <div class="svc-desc">
+            End-to-end ocean freight forwarding for bulk, breakbulk, and project
+            cargoes. From documentation and customs coordination to final
+            delivery — we handle the logistics chain so you focus on your
+            business.
+          </div>
+          <div class="svc-tag">FORWARDING</div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="div" />
+
+    <!-- MARKET INDICES -->
+    <section id="market">
+      <div class="section-hdr">
+        <div>
+          <div class="sec-tag">Live Intelligence</div>
+          <h2 class="sec-title">Freight Market Indices</h2>
+        </div>
+        <span class="live-tag"
+          ><span class="live-dot"></span>Auto-refreshing</span
+        >
+      </div>
+      <div class="market-grid" id="marketGrid"></div>
+    </section>
+
+    <hr class="div" />
+
+    <!-- CURRENCIES -->
+    <section id="currencies">
+      <div class="section-hdr">
+        <div>
+          <div class="sec-tag">Exchange Rates</div>
+          <h2 class="sec-title">Live Currency Rates vs USD</h2>
+        </div>
+        <span class="live-tag"
+          ><span class="live-dot"></span
+          ><span id="currTs">Fetching…</span></span
+        >
+      </div>
+      <div class="curr-grid" id="currGrid"></div>
+    </section>
+
+    <hr class="div" />
+
+    <!-- CALCULATOR -->
+    <section id="calculator">
+      <div class="sec-tag">Rate Estimator</div>
+      <h2 class="sec-title">Freight Cost Calculator</h2>
+      <p class="sec-lead" style="margin-bottom: 1.5rem">
+        Indicative freight estimates based on live market rates and route
+        distances.
+      </p>
+      <div class="calc-box">
+        <div class="calc-grid">
+          <div class="fg">
+            <label>Origin Port</label>
+            <select id="c-orig">
+              <option value="CNSHA">Shanghai (CNSHA)</option>
+              <option value="SGSIN">Singapore (SGSIN)</option>
+              <option value="USNYC">New York (USNYC)</option>
+              <option value="NLRTM">Rotterdam (NLRTM)</option>
+              <option value="DEHAM">Hamburg (DEHAM)</option>
+              <option value="GBFXT">Felixstowe (GBFXT)</option>
+              <option value="JPTYO">Tokyo (JPTYO)</option>
+              <option value="INMAA">Chennai (INMAA)</option>
+              <option value="INBOM" selected>Mumbai (INBOM)</option>
+              <option value="AEDXB">Dubai (AEDXB)</option>
+              <option value="KRPUS">Busan (KRPUS)</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Destination Port</label>
+            <select id="c-dest">
+              <option value="USNYC">New York (USNYC)</option>
+              <option value="CNSHA">Shanghai (CNSHA)</option>
+              <option value="NLRTM" selected>Rotterdam (NLRTM)</option>
+              <option value="SGSIN">Singapore (SGSIN)</option>
+              <option value="DEHAM">Hamburg (DEHAM)</option>
+              <option value="GBFXT">Felixstowe (GBFXT)</option>
+              <option value="JPTYO">Tokyo (JPTYO)</option>
+              <option value="INMAA">Chennai (INMAA)</option>
+              <option value="INBOM">Mumbai (INBOM)</option>
+              <option value="AEDXB">Dubai (AEDXB)</option>
+              <option value="KRPUS">Busan (KRPUS)</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Vessel / Container Type</label>
+            <select id="c-type">
+              <option value="20GP">20ft General Purpose</option>
+              <option value="40HC" selected>40ft High Cube</option>
+              <option value="40GP">40ft General Purpose</option>
+              <option value="45HC">45ft High Cube</option>
+              <option value="HANDY">Handy Tanker (25k–40k DWT)</option>
+              <option value="MR">MR Tanker (40k–55k DWT)</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Cargo Weight (MT)</label>
+            <input type="number" id="c-wt" value="12" min="1" max="55000" />
+          </div>
+          <div class="fg">
+            <label>Cargo Type</label>
+            <select id="c-cargo">
+              <option>Petrochemicals</option>
+              <option>Clean Petroleum Products (CPP)</option>
+              <option>Vegetable Oil</option>
+              <option>LPG / Gas</option>
+              <option>Dry Bulk</option>
+              <option>General Cargo</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Display Currency</label>
+            <select id="c-curr">
+              <option value="USD">USD — US Dollar</option>
+              <option value="EUR">EUR — Euro</option>
+              <option value="GBP">GBP — British Pound</option>
+              <option value="INR">INR — Indian Rupee</option>
+              <option value="AED">AED — UAE Dirham</option>
+              <option value="SGD">SGD — Singapore Dollar</option>
+              <option value="CNY">CNY — Chinese Yuan</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn-calc" onclick="runCalc()">
+          Calculate Freight Rate
+        </button>
+        <div class="calc-out" id="calcOut">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 0.25rem;
+            "
+          >
+            <span
+              style="
+                font-family: var(--head);
+                font-size: 1rem;
+                font-weight: 700;
+              "
+              >Estimated Freight Breakdown</span
+            >
+            <span class="live-tag"
+              ><span class="live-dot"></span>Live rates applied</span
+            >
+          </div>
+          <div class="r-grid">
+            <div class="r-item">
+              <div class="r-lbl">Base Freight</div>
+              <div class="r-val" id="r-base">—</div>
+            </div>
+            <div class="r-item">
+              <div class="r-lbl">BAF Surcharge</div>
+              <div class="r-val" id="r-baf">—</div>
+            </div>
+            <div class="r-item">
+              <div class="r-lbl">Total Estimate</div>
+              <div class="r-val" id="r-tot">—</div>
+            </div>
+            <div class="r-item">
+              <div class="r-lbl">Transit Time</div>
+              <div class="r-val" id="r-eta" style="color: var(--white)">—</div>
+            </div>
+            <div class="r-item">
+              <div class="r-lbl">Rate / MT</div>
+              <div class="r-val" id="r-mt" style="color: var(--sky)">—</div>
+            </div>
+            <div class="r-item">
+              <div class="r-lbl">CO₂ Estimate</div>
+              <div
+                class="r-val"
+                id="r-co2"
+                style="color: var(--muted); font-size: 1.15rem"
+              >
+                —
+              </div>
+            </div>
+          </div>
+          <div class="r-note" id="r-note"></div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="div" />
+
+    <!-- LIVE ROUTES -->
+    <section id="routes">
+      <div class="section-hdr">
+        <div>
+          <div class="sec-tag">Active Fixtures</div>
+          <h2 class="sec-title">Live Freight Routes</h2>
+        </div>
+        <select class="filter-sel" id="rFilter" onchange="filterR()">
+          <option value="all">All Regions</option>
+          <option value="asia">Asia Origin</option>
+          <option value="europe">Europe Origin</option>
+          <option value="americas">Americas Origin</option>
+        </select>
+      </div>
+      <div class="tbl-wrap">
+        <table class="rt">
+          <thead>
+            <tr>
+              <th>Route</th>
+              <th>Carrier / Vessel</th>
+              <th>Type</th>
+              <th>Rate (USD)</th>
+              <th>Transit</th>
+              <th>Utilisation</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="rBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <hr class="div" />
+
+    <!-- PORT STATUS -->
+    <section id="ports">
+      <div class="sec-tag">Port Intelligence</div>
+      <h2 class="sec-title">Global Port Status</h2>
+      <div class="port-grid" id="portGrid"></div>
+    </section>
+
+    <hr class="div" />
+
+    <!-- FREIGHT TRENDS -->
+    <section id="freight">
+      <div class="sec-tag">Trade Routes</div>
+      <h2 class="sec-title">Freight Trends</h2>
+      <p class="sec-lead">Indicative spot market rates updated by our chartering desk. Click a rate to edit (admin only).</p>
+      <div class="ft-tabs" style="margin-top:1.8rem">
+        <button class="ft-tab active" onclick="ftShowTab('PETCHEM',this)">Petrochemicals</button>
+        <button class="ft-tab" onclick="ftShowTab('VEGOILS',this)">Vegetable Oils</button>
+      </div>
+      <div id="ftGrid" class="ft-grid"></div>
+    </section>
+
+    <hr class="div" />
+
+    <!-- BUNKER TRENDS -->
+    <section id="bunkers">
+      <div class="section-hdr">
+        <div>
+          <div class="sec-tag">Fuel Intelligence</div>
+          <h2 class="sec-title">Bunker Trends</h2>
+        </div>
+        <span class="live-tag"><span class="live-dot"></span>Market close rates ($/MT)</span>
+      </div>
+      <div class="tbl-wrap" style="margin-top:1.5rem">
+        <table class="rt">
+          <thead>
+            <tr>
+              <th>Port</th>
+              <th>VLSFO</th>
+              <th>MGO</th>
+              <th>IFO 380</th>
+            </tr>
+          </thead>
+          <tbody id="bunkersBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <hr class="div" />
+
+    <!-- FIXTURES REPORTED -->
+    <section id="fixtures">
+      <div class="section-hdr">
+        <div>
+          <div class="sec-tag">Reported Business</div>
+          <h2 class="sec-title">Fixtures Reported</h2>
+        </div>
+        <button id="btnAddFixture" class="adm-add-btn" style="display:none" onclick="openAddFixture()">+ Add Fixture</button>
+      </div>
+      <div class="tbl-wrap" style="margin-top:1.5rem">
+        <table class="rt">
+          <thead>
+            <tr>
+              <th>Vessel</th><th>Charterer</th><th>Cargo</th><th>Qty</th>
+              <th>Route</th><th>Laycan</th><th>Rate</th><th>Date</th><th></th>
+            </tr>
+          </thead>
+          <tbody id="fixturesBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <hr class="div" />
+
+    <!-- VESSEL POSITIONS -->
+    <section id="vessels">
+      <div class="section-hdr">
+        <div>
+          <div class="sec-tag">Fleet Tracking</div>
+          <h2 class="sec-title">Vessel Positions</h2>
+        </div>
+        <button id="btnAddVessel" class="adm-add-btn" style="display:none" onclick="openAddVessel()">+ Add Vessel</button>
+      </div>
+      <div class="tbl-wrap" style="margin-top:1.5rem">
+        <table class="rt">
+          <thead>
+            <tr>
+              <th>Vessel</th><th>Type</th><th>Last Port</th><th>Next Port</th>
+              <th>ETA</th><th>Cargo</th><th>Status</th><th></th>
+            </tr>
+          </thead>
+          <tbody id="vesselsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <hr class="div" />
+
+    <!-- PORT INFORMATION -->
+    <section id="portinfo">
+      <div class="section-hdr">
+        <div>
+          <div class="sec-tag">Port Intelligence</div>
+          <h2 class="sec-title">Port Information</h2>
+        </div>
+        <button id="btnAddPort" class="adm-add-btn" style="display:none" onclick="editPortInfo(-1)">+ Add Port</button>
+      </div>
+      <div id="portInfoGrid" class="pi-grid"></div>
+    </section>
+
+    <hr class="div" />
+
+    <!-- MARKET NEWS -->
+    <section id="news">
+      <div class="section-hdr">
+        <div>
+          <div class="sec-tag">Market Intelligence</div>
+          <h2 class="sec-title">Market News</h2>
+        </div>
+        <button id="btnAddNews" class="adm-add-btn" style="display:none" onclick="openAddNews()">+ Add News</button>
+      </div>
+      <div id="newsGrid" class="news-grid"></div>
+    </section>
+
+    <hr class="div" />
+
+    <!-- DOCUMENTS -->
+    <section id="documents">
+      <div class="section-hdr">
+        <div>
+          <div class="sec-tag">Resources</div>
+          <h2 class="sec-title">Documents</h2>
+        </div>
+        <label id="btnUploadDoc" class="adm-add-btn" style="display:none;cursor:pointer">
+          + Upload
+          <input type="file" id="docFileInput" style="display:none"
+            accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv"
+            onchange="handleDocUpload(event)" />
+        </label>
+      </div>
+      <div id="docsGrid" class="docs-grid"></div>
+      <div id="docsEmpty" class="docs-empty">No documents uploaded yet.</div>
+    </section>
+
+    <hr class="div" />
+
+    <!-- Generic market edit modal -->
+    <div class="adm-modal-overlay" id="mktModal">
+      <div class="adm-modal" style="width:440px;max-width:96vw">
+        <div class="adm-modal-head" id="mktModalTitle">Edit</div>
+        <div class="adm-modal-body" style="max-height:72vh;overflow-y:auto">
+          <div id="mktModalFields"></div>
+          <div class="adm-err" id="mktModalErr"></div>
+          <div style="display:flex;gap:8px;margin-top:1.2rem">
+            <button class="btn-gold" id="mktModalSave" style="flex:1;padding:11px;font-size:13px">Save</button>
+            <button class="btn-ghost" style="padding:11px 18px;font-size:13px" onclick="closeMktModal()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INVOICES (admin only) -->
+    <section id="invoices" style="display:none;"></section>
+    <hr>
+
+    <!-- INVOICE PRINT AREA (off-screen, used for PDF capture) -->
+    <div id="invPrintArea" style="display:none;position:fixed;left:-9999px;top:0;"></div>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="section-hdr" style="margin-bottom:1.8rem">
+        <div>
+          <div class="sec-tag">Get In Touch</div>
+          <h2 class="sec-title" style="margin-bottom:0">Contact SEAORION</h2>
+        </div>
+        <button id="btnEditContact" class="adm-add-btn" style="display:none" onclick="editContact()">✎ Edit Contact Info</button>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-form">
+          <div class="cf-row">
+            <div class="fg">
+              <label>Full Name</label
+              ><input type="text" placeholder="Rajesh Kumar" />
+            </div>
+            <div class="fg">
+              <label>Company</label
+              ><input type="text" placeholder="Company Name" />
+            </div>
+          </div>
+          <div class="cf-row">
+            <div class="fg">
+              <label>Email</label
+              ><input type="email" placeholder="you@company.com" />
+            </div>
+            <div class="fg">
+              <label>Phone</label
+              ><input type="tel" placeholder="+91 98XXX XXXXX" />
+            </div>
+          </div>
+          <div class="cf-row">
+            <div class="fg">
+              <label>Service Required</label>
+              <select>
+                <option>Tanker Chartering</option>
+                <option>COA / TC Management</option>
+                <option>Demurrage Claims</option>
+                <option>Post-Fixture Operations</option>
+                <option>Market Research</option>
+                <option>Freight Forwarding</option>
+              </select>
+            </div>
+            <div class="fg">
+              <label>Cargo Type</label>
+              <select>
+                <option>Petrochemicals</option>
+                <option>CPP</option>
+                <option>Vegetable Oil</option>
+                <option>LPG / Gas</option>
+                <option>Dry Bulk</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="cf-row full">
+            <div class="fg">
+              <label>Message</label>
+              <textarea
+                style="
+                  background: rgba(8, 15, 30, 0.9);
+                  border: 1px solid var(--border);
+                  border-radius: 8px;
+                  padding: 10px 13px;
+                  color: var(--white);
+                  font-family: var(--body);
+                  font-size: 13.5px;
+                  outline: none;
+                  resize: vertical;
+                  min-height: 90px;
+                  transition: border-color 0.2s;
+                "
+                placeholder="Describe your requirement — route, cargo, quantity, laycan…"
+                onfocus="this.style.borderColor = 'var(--gold)'"
+                onblur="this.style.borderColor = 'var(--border)'"
+              ></textarea>
+            </div>
+          </div>
+          <button
+            class="btn-gold"
+            style="
+              width: 100%;
+              padding: 13px;
+              font-size: 14px;
+              letter-spacing: 0.04em;
+            "
+          >
+            Send Enquiry →
+          </button>
+        </div>
+        <div class="contact-info" id="contactInfo"></div>
+      </div>
+    </section>
+
+    <hr class="div" />
+
+    <!-- FOOTER -->
+    <footer>
+      <div>
+        <div class="foot-brand">
+          <img src="logo.png" class="logo-img-foot" alt="SEAORION" />
+        </div>
+        <div class="foot-sub">
+          Independent Shipbroking & Freight · Mumbai, India
+        </div>
+      </div>
+      <div class="foot-links">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#market">Market</a>
+        <a href="#calculator">Calculator</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="foot-right">
+        © 2026 SEAORION Shipping Pvt. Ltd.<br />All rights reserved.
+      </div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════ ADMIN ════════════════════════════════════════ -->
+
+    <!-- Login modal -->
+    <div class="adm-modal-overlay" id="admModal">
+      <div class="adm-modal">
+        <div class="adm-modal-head">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Admin Login
+        </div>
+        <div class="adm-modal-body">
+          <p style="font-size:13px;color:rgba(238,242,255,0.6);margin-bottom:1.2rem;line-height:1.6;">
+            Sign in with your Google account to access the admin panel.
+          </p>
+          <div class="adm-err" id="admErr"></div>
+          <button class="btn-google" onclick="admLogin()">
+            <svg width="18" height="18" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+              <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+              <path fill="none" d="M0 0h48v48H0z"/>
+            </svg>
+            Sign in with Google
+          </button>
+          <button class="btn-ghost" style="width:100%;padding:11px;font-size:13px;margin-top:8px" onclick="admCloseModal()">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin panel sidebar -->
+    <div class="adm-panel" id="admPanel">
+      <div class="adm-panel-head">
+        <span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-2px;margin-right:5px"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M6.34 6.34L4.93 4.93M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
+          Admin Panel
+        </span>
+        <button class="adm-logout" onclick="admLogout()">Logout</button>
+      </div>
+      <div class="adm-panel-body">
+        <p class="adm-hint">Drag ⠿ or use ↑ ↓ to reorder sections. Click the eye to show/hide. Changes apply instantly — click Save to persist.</p>
+        <div id="admSectionList" class="adm-section-list"></div>
+        <div class="adm-actions">
+          <button class="btn-gold" id="admSaveBtn" onclick="admSave()">Save Layout</button>
+          <button class="btn-ghost adm-reset-btn" onclick="admReset()">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PDF Preview Modal -->
+    <div class="pdf-prev-overlay" id="pdfPrevModal" onclick="if(event.target===this)invClosePdfPreview()">
+      <div class="pdf-prev-dialog">
+        <div class="pdf-prev-hdr">
+          <div>
+            <div class="pdf-prev-tag">Preview</div>
+            <h3 class="pdf-prev-title" id="pdfPrevTitle">Invoice Preview</h3>
+          </div>
+          <button class="pdf-prev-close" onclick="invClosePdfPreview()" title="Close">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="pdf-prev-body" id="pdfPrevBody"></div>
+        <div class="pdf-prev-footer">
+          <button class="inv-btn-secondary" onclick="invClosePdfPreview()" style="padding:.65rem 1.4rem;font-size:.85rem;">Cancel</button>
+          <button class="inv-btn-primary" id="pdfPrevDownloadBtn" onclick="invPdfPreviewDownload()" style="padding:.65rem 1.6rem;font-size:.85rem;">&#8659; Download PDF</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Global Delete Confirmation Modal -->
+    <div class="del-confirm-overlay" id="delConfirmModal">
+      <div class="del-confirm-card">
+        <div class="del-confirm-icon-wrap">
+          <svg class="del-confirm-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"/>
+            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+            <path d="M10 11v6M14 11v6"/>
+            <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+          </svg>
+        </div>
+        <h3 class="del-confirm-title" id="delConfirmTitle">Delete Item?</h3>
+        <p class="del-confirm-msg" id="delConfirmMsg">This action cannot be undone.</p>
+        <div class="del-confirm-actions">
+          <button class="del-confirm-cancel" onclick="_delConfirmClose()">Cancel</button>
+          <button class="del-confirm-btn" onclick="_delConfirmExecute()" id="delConfirmBtn">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ SCRIPTS ═══════════════════════════════════════ -->
+    <!-- Firebase SDK (compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="firebase.js"></script>
+    <script src="script.js"></script>
+    <script src="admin.js"></script>
+    <script src="market.js"></script>
+    <script src="invoices.js"></script>
+  </body>
+</html>
