@@ -1152,10 +1152,32 @@ document.addEventListener("DOMContentLoaded", () => {
   invBootstrapNumbers();
   invRender();
 
+  // Load bank details from localStorage cache first (instant)
+  try {
+    const cached = JSON.parse(localStorage.getItem("soa_bank"));
+    if (cached) { INV_BANK = { ...INV_BANK, ...cached }; invRender(); }
+  } catch {}
+
+  const loadBank = () => {
+    if (!window._fbEnabled || !window._db) return;
+    window._db.collection("config").doc("config").get()
+      .then(doc => {
+        if (doc.exists && doc.data().bank) {
+          INV_BANK = { ...INV_BANK, ...doc.data().bank };
+          try { localStorage.setItem("soa_bank", JSON.stringify(doc.data().bank)); } catch {}
+          invRender();
+        } else {
+          console.warn("INV_BANK: config/config doc missing or has no bank field");
+        }
+      })
+      .catch(err => console.error("INV_BANK load failed:", err.code, err.message));
+  };
+
   const trySync = (attempts) => {
     if (window._fbEnabled && window._db) {
+      loadBank();
       const keys = [INV_KEY, MASTER_KEY, META_KEY, INV_NUMBERS_KEY];
-      const invoiceSync = Promise.all(keys.map(k =>
+      Promise.all(keys.map(k =>
         window._db.collection("seaorion").doc(k).get()
           .then(doc => {
             if (!doc.exists) return;
@@ -1163,15 +1185,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!window._cache) window._cache = {};
             window._cache[k] = data;
             try { localStorage.setItem(k, JSON.stringify(data)); } catch {}
-          }).catch(() => {})
-      ));
-      const bankSync = window._db.collection("config").doc("config").get()
-        .then(doc => {
-          if (doc.exists && doc.data().bank) {
-            INV_BANK = { ...INV_BANK, ...doc.data().bank };
-          }
-        }).catch(() => {});
-      Promise.all([invoiceSync, bankSync]).then(() => {
+          }).catch(err => console.warn("Sync failed for", k, err.code))
+      )).then(() => {
         if (sessionStorage.getItem("soa_adm") === "1") {
           invBootstrapCounter();
           invBootstrapNumbers();
